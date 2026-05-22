@@ -5,9 +5,18 @@ from snowflake.snowpark.functions import col
 import requests  
 
 
-smoothiefroot_response = requests.get("[https://my.smoothiefroot.com/api/fruit/watermelon](https://my.smoothiefroot.com/api/fruit/watermelon)")  
+# smoothiefroot_response = requests.get("[https://my.smoothiefroot.com/api/fruit/watermelon](https://my.smoothiefroot.com/api/fruit/watermelon)")  
 # st.text(smoothiefroot_response.json())
-sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+# sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+# 1. Keeping your exact URL string format
+raw_url = "[https://my.smoothiefroot.com/api/fruit/watermelon](https://my.smoothiefroot.com/api/fruit/watermelon)"  
+
+# 2. Extract the clean URL inside the parentheses dynamically
+clean_url = raw_url.split("(")[1].split(")")[0]
+
+# 3. Make the API request
+smoothiefroot_response = requests.get(clean_url)
+
 # Write directly to the app
 st.title(f":cup_with_straw: Customize your smoothie :cup_with_straw: ")
 st.write(
